@@ -1,17 +1,15 @@
 // src/routes/root.js
-import React from 'react';
-import { Outlet } from 'react-router-dom';
-import Navbar from '../components/Navbar';
+import React from "react";
+import { Outlet } from "react-router-dom";
+import Navbar from "../components/Navbar";
 
 const Root = () => {
   return (
-    <div className="flex flex-col min-h-screen">
-      <div className='flex justify-center' >
+    <div className="flex flex-col justify-center min-h-screen">
         <Navbar />
-      </div>
-      <main className="flex-grow">
-        <Outlet /> 
-      </main>
+        <main className="flex-grow">
+          <Outlet />
+        </main>
     </div>
   );
 };

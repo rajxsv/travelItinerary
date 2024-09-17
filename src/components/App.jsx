@@ -68,7 +68,7 @@ const App = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center w-full items-center h-screen bg-gray-800">
+    <div className="flex flex-col justify-items-start gap-7 w-full items-center h-screen bg-gray-800">
       <div className="flex justify-start w-2/3 m-2" >
         {step > 1 && (
           <button onClick={handleBack} className="text-white bg-blue-500 p-2 rounded">
@@ -76,7 +76,7 @@ const App = () => {
             </button>
           )}
       </div>
-      <div className="bg-slate-700 p-8 rounded-lg text-white w-2/3 h-3/4 overflow-scroll">
+      <div className="bg-slate-700 p-8 rounded-lg text-white md:w-2/3 h-3/4 overflow-scroll">
         <div className="mt-4 flex justify-between">
         </div>
         {loading && <Loader />} 
