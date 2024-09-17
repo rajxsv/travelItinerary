@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Root from './routes/root';
-import { App, Itineraries, ItineraryDetails } from './components/App';
+import { App} from './components/App';
 import './styles/index.css'
 
 const router = createBrowserRouter([
@@ -11,8 +11,6 @@ const router = createBrowserRouter([
     element: <Root />,
     children: [
       { path: '/', element: <App /> },
-      { path: 'itineraries', element: <Itineraries /> },
-      { path: 'itinerary-details', element: <ItineraryDetails /> },
     ],
   },
 ]);
