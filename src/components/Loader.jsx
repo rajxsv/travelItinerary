@@ -5,7 +5,7 @@ export default function Loader() {
   return (
     <>
       <div className="flex flex-col justify-center items-center overflow-clip h-lvh w-full">
-        <p>Due to the free tier backend service, requests may take longer then expected</p>
+        <p>Due to the free tier backend service, requests may take longer than expected</p>
         <p>please stay patient</p>
         <LineWave
             visible={true}
