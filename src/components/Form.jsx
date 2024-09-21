@@ -48,7 +48,7 @@ const Form = ({ handleNext, setLoading }) => {
   const [budget, setBudget] = useState(0);
   const [interests, setInterests] = useState([]);
   const [tripDuration, setTripDuration] = useState(0);
-  const [interestOptions, setInterestOptions] = useState();
+  const [interestOptions, setInterestOptions] = useState(null);
   const [aiMode, setAiMode] = useState(false);
   const [prompt, setUserPrompt] = useState("");
   const [aiDataReady, setAiDataReady] = useState(false);
