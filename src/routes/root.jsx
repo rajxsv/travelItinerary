@@ -5,11 +5,9 @@ import Navbar from "../components/Navbar";
 
 const Root = () => {
   return (
-    <div className="flex flex-col justify-center min-h-screen">
+    <div className="flex flex-col max-h-fit">
         <Navbar />
-        <main className="flex-grow">
-          <Outlet />
-        </main>
+        <Outlet />
     </div>
   );
 };

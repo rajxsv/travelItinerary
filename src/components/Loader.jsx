@@ -1,25 +1,31 @@
-import React from "react";
-import { LineWave } from "react-loader-spinner";
+import React, { useEffect, useState } from 'react';
+import Lottie from 'react-lottie';
+import animationData from '../../public/Animation - 1726768680248.json'; 
 
-export default function Loader() {
+const Loader = () => {
+    const [show,setshow] = useState(false)
+
+    useEffect(()=>{
+        setTimeout(()=>{
+            setshow(true)
+        },5*1000)
+    },[])
+
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: animationData,
+    rendererSettings: {
+      preserveAspectRatio: 'xMidYMid slice',
+    },
+  };
+
   return (
-    <>
-      <div className="flex flex-col justify-center items-center overflow-clip h-lvh w-full">
-        <p>Due to the free tier backend service, requests may take longer than expected</p>
-        <p>please stay patient</p>
-        <LineWave
-            visible={true}
-            height="100"
-            width="100"
-            color="#4fa94d"
-            ariaLabel="line-wave-loading"
-            wrapperStyle={{}}
-            wrapperClass=""
-            firstLineColor=""
-            middleLineColor=""
-            lastLineColor=""
-        />
-      </div>
-    </>
+    <div className='w-full h-svh flex flex-col justify-center items-center'>
+      <Lottie options={defaultOptions} height={200} width={400} />
+      {show && <span>Due to free tier backend service, response may take time initially. Please be patient.</span>}
+    </div>
   );
-}
+};
+
+export default Loader;

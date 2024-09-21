@@ -5,58 +5,46 @@ import Itineraries from "./Itineraries";
 import Itinerary from "./Itinerary";
 
 const App = () => {
-  const [step, setStep] = useState(1); 
-  const [loading, setLoading] = useState(false); 
-  const [itineraries, setItineraries] = useState([]);
-  const [selectedItinerary, setSelectedItinerary] = useState(null);
+  const [step, setStep] = useState(() => {
+    return parseInt(localStorage.getItem("step")) || 1;
+  });
 
-  const handleNext = (apiData, userInterests) => {
-    console.log("API Interests:", apiData.interests);
-    console.log("User Interests:", userInterests);
-  
-    const transformedItineraries = apiData.paths.map((path) => {
-      const startCity = path.nodes[0].name;
-      const endCity = path.nodes[path.nodes.length - 1].name;
-      const via = path.nodes;
-      const travelCost = path.totalCost;
-      const travelTime = path.totalTime * 60; 
-    
-      let matchScore = 0;
-    
-      const matchInterests = (cityInterests) => {
-        return cityInterests.filter((interest) => userInterests.includes(interest)).length;
-      };
-    
-      const citiesWithInterests = via.map((city) => {
-        const cityName = city.name;
-        const cityInterests = JSON.parse(apiData.interests[cityName]?.[0] || "{}").interests || [];
-        
-        console.log(`City: ${cityName}, Interests:`, cityInterests);
-    
-        matchScore += matchInterests(cityInterests);
-    
-        return {
-          cityName,
-          interests: cityInterests,
-        };
-      });
-    
-      return {
-        path: [{ startCity, endCity, edges: path.edges, via }],
-        travelCost,
-        travelTime,
-        matchScore, 
-        citiesWithInterests, 
-      };
-    });
-    
-    const sortedItineraries = transformedItineraries.sort((a, b) => b.matchScore - a.matchScore);
-    
-    setItineraries(sortedItineraries);
+  const [loading, setLoading] = useState(false);
+  const [itineraries, setItineraries] = useState(() => {
+    return JSON.parse(localStorage.getItem("itineraries")) || [];
+  });
+
+  const [selectedItinerary, setSelectedItinerary] = useState(() => {
+    return JSON.parse(localStorage.getItem("selectedItinerary")) || null;
+  });
+
+  const [userInterests, setUserInterests] = useState(() => {
+    return JSON.parse(localStorage.getItem("userInterests")) || [];
+  });
+
+  // Save the current state to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem("step", step);
+  }, [step]);
+
+  useEffect(() => {
+    localStorage.setItem("itineraries", JSON.stringify(itineraries));
+  }, [itineraries]);
+
+  useEffect(() => {
+    localStorage.setItem("selectedItinerary", JSON.stringify(selectedItinerary));
+  }, [selectedItinerary]);
+
+  useEffect(() => {
+    localStorage.setItem("userInterests", JSON.stringify(userInterests));
+  }, [userInterests]);
+
+  const handleNext = (interests, resNew) => {
+    setUserInterests(interests);
+    const transformedItineraries = transformApiData2(resNew, interests);
+    setItineraries(transformedItineraries);
     setStep(2);
   };
-  
-  
 
   const handleBack = () => {
     if (step > 1) setStep(step - 1);
@@ -64,41 +52,89 @@ const App = () => {
 
   const handleSelectItinerary = (itinerary) => {
     setSelectedItinerary(itinerary);
-    setStep(3); 
+    setStep(3);
   };
 
   return (
-    <div className="flex flex-col justify-items-start gap-7 w-full items-center h-screen bg-gray-800">
-      <div className="flex justify-start w-2/3 m-2" >
+    <div className="min-h-screen bg-gray-900 text-white">
+      <div className="container mx-auto px-4 py-8">
         {step > 1 && (
-          <button onClick={handleBack} className="text-white bg-blue-500 p-2 rounded">
-              Back
-            </button>
-          )}
-      </div>
-      <div className="bg-slate-700 p-8 rounded-lg text-white md:w-2/3 h-3/4 overflow-scroll">
-        <div className="mt-4 flex justify-between">
-        </div>
-        {loading && <Loader />} 
-        {!loading && step === 1 && (
-          <Form handleNext={handleNext} setLoading={setLoading} />
+          <button
+            onClick={handleBack}
+            className="mb-6 px-4 py-2 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-700 transition-transform duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-blue-300 focus:ring-opacity-50"
+          >
+            ← Back
+          </button>
         )}
-        <div className=" overflow-scroll">
-          {!loading && step === 2 && (
-            <Itineraries
-            itineraries={itineraries}
-            handleSelectItinerary={handleSelectItinerary}
-            />
+
+        <div className="bg-gray-900 w-full rounded-xl shadow-2xl overflow-hidden">
+          {loading ? (
+            <div className="p-8">
+              <Loader />
+            </div>
+          ) : (
+            <>
+              {step === 1 && (
+                <Form handleNext={handleNext} setLoading={setLoading} />
+              )}
+              {step === 2 && (
+                <Itineraries
+                  itineraries={itineraries}
+                  handleSelectItinerary={handleSelectItinerary}
+                />
+              )}
+              {step === 3 && selectedItinerary && (
+                <Itinerary
+                  itinerary={selectedItinerary}
+                  userInterests={userInterests}
+                />
+              )}
+            </>
           )}
-          
         </div>
-        {!loading && step === 3 && selectedItinerary && (
-          <Itinerary itinerary={selectedItinerary} />
-        )}
-        
       </div>
     </div>
   );
 };
 
-export {App};
+const transformApiData2 = (apiData, userInterests) => {
+  const transformedItineraries = apiData.data.map((path) => {
+    console.log("PATH", path);
+    const startCity = path.citiesInPath[0].cityName;
+    const endCity = path.citiesInPath[path.citiesInPath.length - 1].cityName;
+    const travelCost = path.tripCost;
+    const travelTime = path.tripDuration * 60;
+
+    const citiesWithInterests = path.citiesInPath.map((city) => ({
+      cityName: city.cityName,
+      accomodations: city.accomodations,
+      attractions: city.attractions,
+      activities: city.activities,
+      restraunts: city.restraunts,
+    }));
+
+    const matchScore = citiesWithInterests.reduce((score, city) => {
+      const categories = ['activities', 'accommodations', 'restaurants', 'attractions'];
+    
+      categories.forEach((category) => {
+        if (city[category]) {
+          score += city[category].filter((interest) => userInterests.includes(interest)).length;
+        }
+      });
+  
+      return score;
+    }, 0);
+
+    return {
+      path: [{ startCity, endCity, citiesInPath: path.citiesInPath }],
+      travelCost,
+      travelTime,
+      matchScore,
+      citiesWithInterests,
+    };
+  });
+
+  return transformedItineraries.sort((a, b) => b.matchScore - a.matchScore);
+};
+
+export { App };
