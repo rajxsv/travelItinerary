@@ -6,8 +6,6 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 const SESSION_ID = import.meta.env.VITE_SESSION_ID;
 const API_KEY = import.meta.env.VITE_API_KEY;
 
-console.log(SESSION_ID, API_KEY);
-
 const basePrompt =
   "Given a user query i want you to extract interests from the text but only from the given interests array which is" +
   "[" +
@@ -116,10 +114,9 @@ const Form = ({ handleNext, setLoading }) => {
   };
 
   const onSubmit = async () => {
-    console.log(tripDuration, budget, interests); // This will now reflect correct values
     setLoading(true);
     try {
-      const tripDurationInHours = tripDuration * 24; // Convert to hours
+      const tripDurationInHours = tripDuration * 24; 
       let url = startCity
         ? `${API_BASE_URL}/v1/findOptimalTripsWithStartCity?userMaxBudget=${budget}&maxTripDuration=${tripDurationInHours}&userInterests=${interests.toString()}&userBudget=Medium&startCityName=${startCity}`
         : `${API_BASE_URL}/v1/findOptimalTrips?userMaxBudget=${budget}&maxTripDuration=${tripDurationInHours}&userInterests=${interests.toString()}&userBudget=Medium`;

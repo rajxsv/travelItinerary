@@ -88,7 +88,6 @@ const CityCard = ({ city, userInterests }) => {
         </button>
       </div>
       <ul className="space-y-2">
-        {console.log("CITY", city)}
         {city.accomodations?.map((ele) => (
           <p
             className={`${

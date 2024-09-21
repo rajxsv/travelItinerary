@@ -99,7 +99,6 @@ const App = () => {
 
 const transformApiData2 = (apiData, userInterests) => {
   const transformedItineraries = apiData.data.map((path) => {
-    console.log("PATH", path);
     const startCity = path.citiesInPath[0].cityName;
     const endCity = path.citiesInPath[path.citiesInPath.length - 1].cityName;
     const travelCost = path.tripCost;
