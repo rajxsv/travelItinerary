@@ -3,7 +3,7 @@
 ---
 ### Solution
 
-- A web app on which user can enter their preferences and receive multiple travel options   based on their inputs.
+- A web app on which user can enter their preferences and receive multiple travel options based on their inputs.
 - Deployed at https://atlan-travel-itinerary.vercel.app/
 ---
 ### Tech Stack
