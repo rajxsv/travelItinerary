@@ -110,11 +110,10 @@ Neo4j and Cypher - https://neo4j.com/docs/cypher-manual/current/introduction/cyp
    `git clone https://github.com/rajxsv/itineraryBackend.git`
    `cd itineraryBackend`
 
-2. **Configure Application Properties:** Update the `application.properties` file in `src/main/resources/` with the correct credentials and database details for Neo4j and MongoDB:
+2. **Configure Application Properties:** Update the `application.properties` file in `src/main/resources/` with the correct credentials and database details for Neo4j:
    `spring.neo4j.uri=your_db_uri`
    `spring.neo4j.authentication.username=neo4j`
-   `spring.neo4j.authentication.password=your_password
-   ``
+   `spring.neo4j.authentication.password=your_password`
 3. **Build the Project:** Ensure Maven is installed and build the project:
    `mvn clean install`
 
