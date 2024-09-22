@@ -25,8 +25,8 @@ const Loader = () => {
       <Lottie options={defaultOptions} height={200} width={400} />
       {show && (
         <span>
-          Due to free tier backend service, initial response may take upto 5 to
-          8 minutes to start the service, just a one time wait. Please be
+          Due to free tier backend service initial response may take upto 5 to 8
+          minutes to start the service. This is just a one time wait. Please be
           patient.
         </span>
       )}
