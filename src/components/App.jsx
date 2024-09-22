@@ -22,7 +22,6 @@ const App = () => {
     return JSON.parse(localStorage.getItem("userInterests")) || [];
   });
 
-  // Save the current state to localStorage whenever it changes
   useEffect(() => {
     localStorage.setItem("step", step);
   }, [step]);
@@ -66,7 +65,6 @@ const App = () => {
             ← Back
           </button>
         )}
-
         <div className="bg-gray-900 w-full rounded-xl shadow-2xl overflow-hidden">
           {loading ? (
             <div className="p-8">
