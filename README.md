@@ -121,5 +121,3 @@ Neo4j and Cypher - https://neo4j.com/docs/cypher-manual/current/introduction/cyp
    `mvn spring-boot:run`
    The backend will be running at `http://localhost:8080`.
 
-Developed and Documented by Rajpreet Singh for Atlan Assignment Submission
-
