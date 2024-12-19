@@ -2,7 +2,7 @@
 - Generate travel Itineraries based on user preferences.
 ---
 ### Solution
-[![Watch the video](https://via.placeholder.com/500)](https://drive.google.com/file/d/1FukbTVRwV552qbFACT7r-NPtFFFZfMfk/view?usp=drive_link)
+[Watch the video](https://drive.google.com/file/d/1FukbTVRwV552qbFACT7r-NPtFFFZfMfk/view?usp=drive_link)
 
 - A web app on which user can enter their preferences and receive multiple travel options based on their inputs.
 - Deployed at https://atlan-travel-itinerary.vercel.app/
